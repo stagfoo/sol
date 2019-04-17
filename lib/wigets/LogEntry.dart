@@ -1,38 +1,48 @@
 import 'package:flutter/material.dart';
 
 class LogEntryItem extends StatefulWidget {
-  LogEntryItem({Key key, this.active: false, @required this.onChanged})
-      : super(key: key);
+  // These Are Widget Props
+  LogEntryItem({
+    Key key,
+    this.active: false,
+    this.highlight: false,
 
-  final bool active;
-  final ValueChanged<bool> onChanged;
+  }): super(key: key);
+  bool active;
+  bool highlight;
+
 
   _LogEntryItem createState() => _LogEntryItem();
 }
 
 class _LogEntryItem extends State<LogEntryItem> {
-  bool _highlight = false;
+  //This is your Widget State
+  bool highlight = false;
+  bool active = false;
+
 
   void _handleTapDown(TapDownDetails details) {
     setState(() {
-      _highlight = true;
+      highlight = true;
     });
   }
 
   void _handleTapUp(TapUpDetails details) {
     setState(() {
-      _highlight = false;
+      highlight = false;
     });
   }
 
   void _handleTapCancel() {
     setState(() {
-      _highlight = false;
+      highlight = false;
     });
   }
 
   void _handleTap() {
-    widget.onChanged(!widget.active);
+    setState(() {
+      widget.active = !widget.active;
+    });
   }
 
   Widget build(BuildContext context) {
@@ -53,7 +63,7 @@ class _LogEntryItem extends State<LogEntryItem> {
         decoration: BoxDecoration(
           color:
               widget.active ? Colors.lightGreen[700] : Colors.grey[600],
-          border: _highlight
+          border: highlight
               ? Border.all(
                   color: Colors.teal[700],
                   width: 10.0,

@@ -16,7 +16,6 @@ import 'screens/SplashView.dart';
 void main() {
   runApp(MaterialApp(
     title: 'SOL', // used by the OS task switcher
-
     theme: new ThemeData(
       primarySwatch: Colors.red,
       textTheme: TextTheme(

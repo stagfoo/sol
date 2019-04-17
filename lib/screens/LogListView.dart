@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sol6/wigets/LogEntry.dart';
+
 
 class LogEntry {
   final String title;
@@ -6,7 +8,6 @@ class LogEntry {
   bool isPlaying;
   final String date;
   LogEntry(this.title, this.description, this.isPlaying, this.date);
-
 }
 
 class CreateLog extends StatelessWidget {
@@ -51,12 +52,13 @@ class CreateLog extends StatelessWidget {
 
 
 class LogListView extends StatelessWidget {
+
   final logs = List<LogEntry>.generate(
     20  ,
     (i) => LogEntry(
         'LogEntry $i',
         'A description of what needs to be done for Todo $i',
-        false,
+        true,
         '19/10/1991'),
   );
 
@@ -98,10 +100,9 @@ class LogListView extends StatelessWidget {
                     onTap: () {
 
                     },
-                    child: ListTile(
-                      title: Text(logs[index].title,
-                          style: Theme.of(context).textTheme.body1),
-                    ),
+                    child: LogEntryItem(
+                      active: logs[index].isPlaying,
+                    )
                   );
                 })
             )
