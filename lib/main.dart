@@ -8,67 +8,31 @@
 import 'dart:io';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
-import 'package:objectdb_flutter/objectdb_flutter.dart';
-import 'wigets/logEnrtry.dart';
-import 'package:path_provider/path_provider.dart' as path;
+import 'screens/LogListView.dart';
+import 'screens/RecordingView.dart';
+import 'screens/SplashView.dart';
 
-class ListView extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-
-
-    // Material is a conceptual piece of paper on which the UI appears.
-    return Material(
-     child: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("images/blur-bg.png"),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("SOL"),
-            Text("Alone, Together"),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-
-
-
-class SplashView extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-
-    // Material is a conceptual piece of paper on which the UI appears.
-    return Material(
-     child: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("images/main-bg.png"),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("SOL"),
-            Text("Alone, Together"),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 void main() {
   runApp(MaterialApp(
-    title: 'My app', // used by the OS task switcher
+    title: 'SOL', // used by the OS task switcher
+
+    theme: new ThemeData(
+      primarySwatch: Colors.red,
+      textTheme: TextTheme(
+        headline: TextStyle(
+            fontSize: 72.0, fontWeight: FontWeight.w100, color: Colors.white,  fontFamily: 'Montserrat'),
+        title: TextStyle(
+            fontSize: 36.0, color: Colors.white, fontFamily: 'Cormorant', fontWeight: FontWeight.normal),
+        display1: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w200, color: Colors.white, fontFamily: 'Montserrat'),
+        body1: TextStyle( fontSize: 16.0, color: Colors.white, fontFamily: 'Cormorant', fontWeight: FontWeight.normal),
+        body2: TextStyle( fontSize: 16.0, color: Colors.white, fontFamily: 'Montserrat', fontWeight: FontWeight.normal),
+      ),
+    ),
     home: SplashView(),
+    routes: <String, WidgetBuilder>{
+      '/list': (BuildContext context) => LogListView(),
+      '/single': (BuildContext context) => RecordingView()
+    },
   ));
 }
