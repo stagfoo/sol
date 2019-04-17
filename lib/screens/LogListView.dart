@@ -45,9 +45,9 @@ class LogListView extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Text('UP'),
-                Text('OK'),
-                Text('BAD'),
+                Text('U'),
+                Text('O'),
+                Text('B'),
               ],
             ),
             CreateLog(),

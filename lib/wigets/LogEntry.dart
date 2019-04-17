@@ -19,24 +19,6 @@ class _LogEntryItem extends State<LogEntryItem> {
   //This is your Widget State
   bool isPlaying = false;
 
-  // void _handleTapDown(TapDownDetails details) {
-  //   setState(() {
-  //     isPlaying = true;
-  //   });
-  // }
-
-  // void _handleTapUp(TapUpDetails details) {
-  //   setState(() {
-  //     isPlaying = false;
-  //   });
-  // }
-
-  // void _handleTapCancel() {
-  //   setState(() {
-  //     isPlaying = false;
-  //   });
-  // }
-
   void _handleTap() {
     setState(() {
       this.isPlaying = !this.isPlaying;
@@ -46,8 +28,6 @@ class _LogEntryItem extends State<LogEntryItem> {
   }
 
   Widget build(BuildContext context) {
-    // This example adds a green border on tap down.
-    // On tap up, the square changes to the opposite state.
     return Container(
         child: Row(
       children: <Widget>[
