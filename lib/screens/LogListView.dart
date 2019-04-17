@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sol6/wigets/LogEntry.dart';
-import 'package:sol6/wigets/CreateLogo.dart';
+import 'package:sol6/wigets/CreateLog.dart';
 
 
 class LogEntry {
