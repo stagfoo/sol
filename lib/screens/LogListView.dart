@@ -4,10 +4,10 @@ import 'package:sol6/wigets/LogEntry.dart';
 
 class LogEntry {
   final String title;
-  final String description;
+  final int rating;
   bool isPlaying;
   final String date;
-  LogEntry(this.title, this.description, this.isPlaying, this.date);
+  LogEntry(this.title, this.rating, this.isPlaying, this.date);
 }
 
 class CreateLog extends StatelessWidget {
@@ -57,7 +57,7 @@ class LogListView extends StatelessWidget {
     20  ,
     (i) => LogEntry(
         'LogEntry $i',
-        'A description of what needs to be done for Todo $i',
+        0,
         true,
         '19/10/1991'),
   );
@@ -101,7 +101,8 @@ class LogListView extends StatelessWidget {
 
                     },
                     child: LogEntryItem(
-                      active: logs[index].isPlaying,
+                      title: logs[index].title,
+                      rating: logs[index].rating,
                     )
                   );
                 })
