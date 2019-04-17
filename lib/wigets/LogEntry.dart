@@ -8,9 +8,9 @@ class LogEntryItem extends StatefulWidget {
     this.rating: 0,
     this.date: '',
   }) : super(key: key);
-  String title;
-  int rating;
-  String date;
+  final String title;
+  final int rating;
+  final String date;
 
   _LogEntryItem createState() => _LogEntryItem();
 }
@@ -49,20 +49,31 @@ class _LogEntryItem extends State<LogEntryItem> {
     // This example adds a green border on tap down.
     // On tap up, the square changes to the opposite state.
     return Container(
-      child: Column(
-        children: <Widget>[
-          Text(widget.title,
-              style: TextStyle(fontSize: 32.0, color: Colors.white)),
-          Text(widget.rating.toString(),
-              style: TextStyle(fontSize: 32.0, color: Colors.white)),
-          Text(widget.date,
-              style: TextStyle(fontSize: 32.0, color: Colors.white)),
-          FlatButton(
-            child: Text('P'),
-            onPressed: _handleTap,
+        child: Row(
+      children: <Widget>[
+        Expanded(
+          flex: 4,
+        child:
+        Column(
+          children: <Widget>[
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(widget.title)
+          ),
+          Container(
+            height: 1.5,
+            color: Colors.white,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[Text('RATING'), Text(widget.date)],
           )
-        ],
-      ),
-    );
+        ])),
+        FlatButton(
+          child: Text(this.isPlaying ? 'S': 'P'),
+          onPressed: _handleTap,
+        )
+      ],
+    ));
   }
 }

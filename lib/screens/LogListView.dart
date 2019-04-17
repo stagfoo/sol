@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sol6/wigets/LogEntry.dart';
+import 'package:sol6/wigets/CreateLogo.dart';
 
 
 class LogEntry {
@@ -10,47 +11,6 @@ class LogEntry {
   LogEntry(this.title, this.rating, this.isPlaying, this.date);
 }
 
-class CreateLog extends StatelessWidget {
-@override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 300,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-
-        Expanded(
-          flex: 4,
-          child: Column(
-            children: <Widget>[
-              TextField(
-                style: Theme.of(context).textTheme.body1,
-              ),
-              Container(
-              padding: EdgeInsets.all(16.0),
-              child:Text('19/10/19', style: Theme.of(context).textTheme.body2)),
-            ],
-          )
-        ),
-
-        Expanded(
-          flex: 1,
-          child: FlatButton(
-          child: Text('R'),
-          onPressed: () {
-            Navigator.pushNamed(context, '/single');
-          }
-        ,)
-
-        ),
-
-      ],)
-    );
-  }
-}
-
-
 class LogListView extends StatelessWidget {
 
   final logs = List<LogEntry>.generate(
@@ -59,7 +19,7 @@ class LogListView extends StatelessWidget {
         'LogEntry $i',
         0,
         true,
-        '19/10/1991'),
+        '$i/10/1991'),
   );
 
   @override
@@ -103,6 +63,8 @@ class LogListView extends StatelessWidget {
                     child: LogEntryItem(
                       title: logs[index].title,
                       rating: logs[index].rating,
+                      date: logs[index].date,
+
                     )
                   );
                 })
