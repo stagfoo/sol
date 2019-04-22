@@ -15,6 +15,7 @@ class RecordingView extends StatefulWidget {
 class _RecordingView extends State<RecordingView> {
   bool _isRecording = false;
   bool _isPlaying = false;
+  String filePath;
   StreamSubscription _recorderSubscription;
   StreamSubscription _dbPeakSubscription;
   StreamSubscription _playerSubscription;
@@ -25,14 +26,14 @@ class _RecordingView extends State<RecordingView> {
   double _dbLevel;
 
   double slider_current_position = 0.0;
-  double max_duration = 1.0;
+  double max_duration = 50.0;
 
 
   @override
   void initState() {
     super.initState();
     flutterSound = new FlutterSound();
-    flutterSound.setSubscriptionDuration(0.01);
+    flutterSound.setSubscriptionDuration(20.0);
     flutterSound.setDbPeakLevelUpdate(0.8);
     flutterSound.setDbLevelEnabled(true);
     initializeDateFormatting();
@@ -40,9 +41,10 @@ class _RecordingView extends State<RecordingView> {
 
   void startRecorder() async{
     try {
-      String path = await flutterSound.startRecorder(null);
+      DateTime fileName = new DateTime.now();
+      //  new File('sdcard/sol/$fileName.mp4');
+      String path = await flutterSound.startRecorder('sdcard/$fileName.mp4');
       print('startRecorder: $path');
-
       _recorderSubscription = flutterSound.onRecorderStateChanged.listen((e) {
         DateTime date = new DateTime.fromMillisecondsSinceEpoch(
             e.currentPosition.toInt(),
@@ -99,17 +101,8 @@ class _RecordingView extends State<RecordingView> {
     try {
       _playerSubscription = flutterSound.onPlayerStateChanged.listen((e) {
         if (e != null) {
-          slider_current_position = e.currentPosition;
-          max_duration = e.duration;
-
-
-          DateTime date = new DateTime.fromMillisecondsSinceEpoch(
-              e.currentPosition.toInt(),
-              isUtc: true);
-          String txt = DateFormat('mm:ss:SS', 'en_GB').format(date);
           this.setState(() {
             this._isPlaying = true;
-            this._playerTxt = txt.substring(0, 8);
           });
         }
       });
@@ -120,6 +113,7 @@ class _RecordingView extends State<RecordingView> {
 
   void stopPlayer() async{
     try {
+      Navigator.pushNamed(context, '/list');
       String result = await flutterSound.stopPlayer();
       print('stopPlayer: $result');
       if (_playerSubscription != null) {
@@ -154,164 +148,35 @@ class _RecordingView extends State<RecordingView> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Flutter Sound'),
+      return Material(
+      child: Container(
+        padding: EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("images/blur-bg.png"),
+            fit: BoxFit.cover,
+          ),
         ),
-        body: ListView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(top: 24.0, bottom:16.0),
-                  child: Text(
-                    this._recorderTxt,
-                    style: TextStyle(
-                      fontSize: 48.0,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                _isRecording ? LinearProgressIndicator(
-                  value: 100.0 / 160.0 * (this._dbLevel ?? 1) / 100,
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
-                  backgroundColor: Colors.red,
-                ) : Container()
-              ],
-            ),
-            Row(
-              children: <Widget>[
-                Container(
-                  width: 56.0,
-                  height: 56.0,
-                  child: ClipOval(
-                    child: FlatButton(
-                      onPressed: () {
-                        if (!this._isRecording) {
-                          return this.startRecorder();
-                        }
-                        this.stopRecorder();
-                      },
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(this._isRecording ? 'S' : 'R'),
-                    ),
-                  ),
-                ),
-              ],
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(top: 60.0, bottom:16.0),
-                  child: Text(
-                    this._playerTxt,
-                    style: TextStyle(
-                      fontSize: 48.0,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: <Widget>[
-                Container(
-                  width: 56.0,
-                  height: 56.0,
-                  child: ClipOval(
-                    child: FlatButton(
-                      onPressed: () {
-                        startPlayer();
-                      },
-                      padding: EdgeInsets.all(8.0),
-                      child: Text('P')
-                    ),
-                  ),
-                ),
-                Container(
-                  width: 56.0,
-                  height: 56.0,
-                  child: ClipOval(
-                    child: FlatButton(
-                      onPressed: () {
-                        pausePlayer();
-                      },
-                      padding: EdgeInsets.all(8.0),
-                      child: Text('PU')
-                    ),
-                  ),
-                ),
-                Container(
-                  width: 56.0,
-                  height: 56.0,
-                  child: ClipOval(
-                    child: FlatButton(
-                      onPressed: () {
-                        stopPlayer();
-                      },
-                      padding: EdgeInsets.all(8.0),
-                      child: Text('S')
-                    ),
-                  ),
-                ),
-              ],
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-            ),
-            Container(
-              height: 56.0,
-              child: Slider(
-                value: slider_current_position,
-                min: 0.0,
-                max: max_duration,
-                onChanged: (double value) async{
-                  await flutterSound.seekToPlayer(value.toInt());
-                },
-                divisions: max_duration.toInt()
-              )
-            )
+            Text("How was your day today?", style:Theme.of(context).textTheme.display1),
+            Text("Where did you go?", style:Theme.of(context).textTheme.display1),
+            Text("Who did you see?", style:Theme.of(context).textTheme.display1),
+            FlatButton(
+              onPressed: startRecorder,
+              child: Text(
+              'R'
+            )),
+            FlatButton(
+              onPressed: stopRecorder,
+              child: Text(
+              'S'
+            ),)
           ],
         ),
       ),
     );
   }
 }
-
-// import 'package:flutter/material.dart';
-// import 'package:async/async.dart';
-
-// class RecordingView extends StatelessWidget {
-
-//   @override
-//   Widget build(BuildContext context) {
-//     // Material is a conceptual piece of paper on which the UI appears.
-//     return Material(
-//       child: Container(
-//         padding: EdgeInsets.all(16.0),
-//         decoration: BoxDecoration(
-//           image: DecorationImage(
-//             image: AssetImage("images/blur-bg.png"),
-//             fit: BoxFit.cover,
-//           ),
-//         ),
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: <Widget>[
-//             Text("How was your day today?"),
-//             Text("Where did you go?"),
-//             Text("Who did you see?"),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 

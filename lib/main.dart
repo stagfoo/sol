@@ -12,6 +12,11 @@ import 'screens/LogListView.dart';
 import 'screens/RecordingView.dart';
 import 'screens/SplashView.dart';
 
+var state = {
+  'currentName': '',
+  'file': '',
+  'list': {}
+};
 
 void main() {
   runApp(MaterialApp(
