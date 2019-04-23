@@ -5,6 +5,8 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'dart:io';
 import 'dart:async';
 import 'package:flutter_sound/flutter_sound.dart';
+import 'package:sol6/utils/storage.dart';
+
 
 
 class RecordingView extends StatefulWidget {
@@ -16,6 +18,7 @@ class _RecordingView extends State<RecordingView> {
   bool _isRecording = false;
   bool _isPlaying = false;
   String filePath;
+  Storage _storage = Storage();
   StreamSubscription _recorderSubscription;
   StreamSubscription _dbPeakSubscription;
   StreamSubscription _playerSubscription;
@@ -41,9 +44,11 @@ class _RecordingView extends State<RecordingView> {
 
   void startRecorder() async{
     try {
-      DateTime fileName = new DateTime.now();
+      String fileName = new DateTime.now().toLocal().toString().split(' ')[0];
       //  new File('sdcard/sol/$fileName.mp4');
-      String path = await flutterSound.startRecorder('sdcard/$fileName.mp4');
+      String mediaPath = await this._storage.localPath;
+      filePath = '$mediaPath/$fileName.mp4';
+      String path = await flutterSound.startRecorder(filePath);
       print('startRecorder: $path');
       _recorderSubscription = flutterSound.onRecorderStateChanged.listen((e) {
         DateTime date = new DateTime.fromMillisecondsSinceEpoch(
@@ -88,13 +93,14 @@ class _RecordingView extends State<RecordingView> {
       this.setState(() {
         this._isRecording = false;
       });
+      // Navigator.pushNamed(context, '/list');
     } catch (err) {
       print('stopRecorder error: $err');
     }
   }
 
   void startPlayer() async{
-    String path = await flutterSound.startPlayer(null);
+    String path = await flutterSound.startPlayer(filePath);
     await flutterSound.setVolume(1.0);
     print('startPlayer: $path');
 
@@ -113,7 +119,6 @@ class _RecordingView extends State<RecordingView> {
 
   void stopPlayer() async{
     try {
-      Navigator.pushNamed(context, '/list');
       String result = await flutterSound.stopPlayer();
       print('stopPlayer: $result');
       if (_playerSubscription != null) {
@@ -168,6 +173,11 @@ class _RecordingView extends State<RecordingView> {
               child: Text(
               'R'
             )),
+            FlatButton(
+              onPressed: startPlayer,
+              child: Text(
+              'START'
+             , style:Theme.of(context).textTheme.display1)),
             FlatButton(
               onPressed: stopRecorder,
               child: Text(
