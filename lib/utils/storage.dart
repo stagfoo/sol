@@ -7,25 +7,4 @@ class Storage {
     final dir = await getApplicationDocumentsDirectory();
     return dir.path;
   }
-
-  Future<File> get localFile async {
-    final path = await localPath;
-    return File('$path/db.json');
-  }
-
-  Future<String> readData() async {
-    try {
-      final file = await localFile;
-      String body = await file.readAsString();
-
-      return body;
-    } catch (e) {
-      return e.toString();
-    }
-  }
-
-  Future<File> writeData(String data) async {
-    final file = await localFile;
-    return file.writeAsString("$data");
-  }
 }
