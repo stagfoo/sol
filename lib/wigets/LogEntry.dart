@@ -6,11 +6,11 @@ class LogEntryItem extends StatefulWidget {
   LogEntryItem({
     Key key,
     this.title: '',
-    this.rating: 0,
+    this.rating: '',
     this.date: '',
   }) : super(key: key);
   final String title;
-  final int rating;
+  final String rating;
   final String date;
 
   _LogEntryItem createState() => _LogEntryItem();

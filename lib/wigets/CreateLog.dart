@@ -13,7 +13,7 @@ class _CreateLog extends State<CreateLog> {
   String logTime = new DateTime.now().toUtc().toString().split(" ")[0];
 
   final db = LogDatabase();
-  saveLog(log){
+  saveLog(){
     db.addRecord({
       'rating': this.dayLevel,
       'title': this.logName,
@@ -70,6 +70,12 @@ class _CreateLog extends State<CreateLog> {
           FlatButton(
             child: recordIcon,
             onPressed: () {
+              saveLog();
+              print({
+      'rating': this.dayLevel,
+      'title': this.logName,
+      'date': this.logTime,
+    });
               Navigator.pushNamed(context, '/single');
             },
           )

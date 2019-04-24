@@ -24,6 +24,11 @@ class _LogListView extends State<LogListView> {
   var logsLength;
 
   getRecords(db) async {
+    db.addRecord({
+      'rating': 'U',
+      'title': 'Example Log',
+      'date': '1991-10-19',
+    });
     this.setState(
       logs = await db.getRecords(10)
     );
@@ -64,11 +69,14 @@ class _LogListView extends State<LogListView> {
                 scrollDirection: Axis.vertical,
                 itemBuilder: (context, index) {
                   return GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      print(logs[index]);
+                      print(logs);
+                    },
                     child: LogEntryItem(
-                      title: logs[index]['title'],
-                      rating: logs[index]['rating'],
-                      date: logs[index]['date'],
+                      title: 'Hello',
+                      rating: 'U',
+                      date: '1991',
                     )
                   );
                 })
