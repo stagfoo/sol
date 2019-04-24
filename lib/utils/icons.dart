@@ -11,11 +11,11 @@ final Widget playIcon = new SvgPicture.asset(
 );
 
 final Widget pauseIcon = new SvgPicture.asset(
-  playSvg,
+  pauseSvg,
   semanticsLabel: 'Play Icon'
 );
 
 final Widget recordIcon = new SvgPicture.asset(
-  playSvg,
+  recordSvg,
   semanticsLabel: 'Play Icon'
 );

@@ -6,7 +6,7 @@ import 'dart:io';
 import 'dart:async';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:sol6/utils/storage.dart';
-
+import 'package:sol6/utils/icons.dart';
 
 
 class RecordingView extends StatefulWidget {
