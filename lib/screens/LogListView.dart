@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sol6/wigets/LogEntry.dart';
 import 'package:sol6/wigets/CreateLog.dart';
+import 'package:sol6/utils/database.dart';
 
 
 class LogEntry {
@@ -12,7 +13,6 @@ class LogEntry {
 }
 
 class LogListView extends StatelessWidget {
-
   final logs = List<LogEntry>.generate(
     20  ,
     (i) => LogEntry(
@@ -41,14 +41,6 @@ class LogListView extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(32.0),
               child: Text("How was your day?", style: Theme.of(context).textTheme.display1)
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Text('U'),
-                Text('O'),
-                Text('B'),
-              ],
             ),
             CreateLog(),
             Expanded( child: ListView.builder(
