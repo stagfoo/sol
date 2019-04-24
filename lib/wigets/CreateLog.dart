@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sol6/utils/database.dart';
+import 'package:sol6/utils/icons.dart';
 
 class CreateLog extends StatefulWidget {
   @override
@@ -9,34 +10,35 @@ class CreateLog extends StatefulWidget {
 class _CreateLog extends State<CreateLog> {
   String dayLevel = 'O';
   String logName = '';
-  String logTime = '';
+  String logTime = new DateTime.now().toUtc().toString().split(" ")[0];
 
   final db = LogDatabase();
   saveLog(log){
-    db.addRecord(log);
-  }
-  updateDayLevel(value) async {
-    this.dayLevel = value;
-    print(this.dayLevel);
-    var record = db.addRecord({
-      'dayLevel': this.dayLevel
+    db.addRecord({
+      'rating': this.dayLevel,
+      'title': this.logName,
+      'date': this.logTime,
     });
-    print(await record);
-    print(await db.getRecords(10));
   }
+  updateDayLevel(value) { this.setState(() => dayLevel = value); }
+  updateLogName(value) {  this.setState(() => logName = value);  }
+  updateLogTime(value) {  this.setState(() => logTime = value);  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(children: <Widget>[
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return Container(
+      padding: EdgeInsets.all(20.0),
+      child: Column(children: <Widget>[
+        Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          FlatButton ( child: Text('U'), onPressed: () => updateDayLevel('U'),),
-          FlatButton ( child: Text('O'), onPressed: () =>updateDayLevel('O')),
-          FlatButton ( child: Text('B'), onPressed: () => updateDayLevel('B')),
+          FlatButton ( child: upIcon, onPressed: () => updateDayLevel('U'),),
+          FlatButton ( child: okIcon, onPressed: () =>updateDayLevel('O')),
+          FlatButton ( child: downIcon, onPressed: () => updateDayLevel('D')),
         ],
       ),
       Container(
-          child: Row(
+        child: Row(
         children: <Widget>[
           Expanded(
               flex: 4,
@@ -45,6 +47,9 @@ class _CreateLog extends State<CreateLog> {
                     alignment: Alignment.centerLeft,
                     child: TextField(
                       style: Theme.of(context).textTheme.body1,
+                      onChanged: (value) {
+                        updateLogName(value);
+                      },
                       onSubmitted: (text) {
                         Navigator.pushNamed(context, '/single');
                       },
@@ -53,19 +58,24 @@ class _CreateLog extends State<CreateLog> {
                   height: 1.5,
                   color: Colors.white,
                 ),
-                Row(
+                Container(
+                  padding: EdgeInsetsDirectional.only(top: 8),
+                  child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[Text('RATING'), Text('')],
-                )
+                  children: <Widget>[
+                    getDayLevel(this.dayLevel),
+                    Text(logTime)],
+                ))
               ])),
           FlatButton(
-            child: Text('R'),
+            child: recordIcon,
             onPressed: () {
               Navigator.pushNamed(context, '/single');
             },
           )
         ],
       ))
-    ]);
+    ])
+    );
   }
 }

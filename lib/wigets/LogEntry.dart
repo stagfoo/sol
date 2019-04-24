@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sol6/utils/icons.dart';
 
 class LogEntryItem extends StatefulWidget {
   // These Are Widget Props
@@ -18,6 +19,10 @@ class LogEntryItem extends StatefulWidget {
 class _LogEntryItem extends State<LogEntryItem> {
   //This is your Widget State
   bool isPlaying = false;
+   final String title = 'Hello';
+  final String rating = "U";
+  final String date = "1991";
+
 
   void _handleTap() {
     setState(() {
@@ -29,6 +34,7 @@ class _LogEntryItem extends State<LogEntryItem> {
 
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.symmetric(vertical:28),
         child: Row(
       children: <Widget>[
         Expanded(
@@ -38,9 +44,10 @@ class _LogEntryItem extends State<LogEntryItem> {
           children: <Widget>[
           Align(
             alignment: Alignment.centerLeft,
-            child: Text(widget.title)
+            child: Text(widget.title, style: Theme.of(context).textTheme.caption)
           ),
           Container(
+            margin: EdgeInsets.symmetric(vertical: 8),
             height: 1.5,
             color: Colors.white,
           ),
@@ -50,7 +57,7 @@ class _LogEntryItem extends State<LogEntryItem> {
           )
         ])),
         FlatButton(
-          child: Text(this.isPlaying ? 'S': 'P'),
+          child: (this.isPlaying ? pauseIcon: playIcon),
           onPressed: _handleTap,
         )
       ],

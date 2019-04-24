@@ -9,6 +9,7 @@ import 'package:sol6/utils/storage.dart';
 import 'package:sol6/utils/icons.dart';
 
 
+
 class RecordingView extends StatefulWidget {
   @override
   _RecordingView createState() => new _RecordingView();
@@ -170,19 +171,14 @@ class _RecordingView extends State<RecordingView> {
             Text("Who did you see?", style:Theme.of(context).textTheme.display1),
             FlatButton(
               onPressed: startRecorder,
-              child: Text(
-              'R'
-            )),
+              child: recordIcon),
             FlatButton(
               onPressed: startPlayer,
-              child: Text(
-              'START'
-             , style:Theme.of(context).textTheme.display1)),
+              child: playIcon
+              ),
             FlatButton(
               onPressed: stopRecorder,
-              child: Text(
-              'S'
-            ),)
+              child: pauseIcon)
           ],
         ),
       ),

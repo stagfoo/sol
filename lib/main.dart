@@ -24,6 +24,7 @@ void main() {
     theme: new ThemeData(
       primarySwatch: Colors.red,
       textTheme: TextTheme(
+        caption: TextStyle( fontSize: 16.0, color: Colors.white, fontFamily: 'Cormorant', fontWeight: FontWeight.bold),
         headline: TextStyle(
             fontSize: 72.0, fontWeight: FontWeight.w100, color: Colors.white,  fontFamily: 'Montserrat'),
         title: TextStyle(
