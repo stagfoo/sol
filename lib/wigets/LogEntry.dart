@@ -53,7 +53,7 @@ class _LogEntryItem extends State<LogEntryItem> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[Text('RATING'), Text(widget.date)],
+            children: <Widget>[getDayLevel(widget.rating), Text(widget.date)],
           )
         ])),
         FlatButton(

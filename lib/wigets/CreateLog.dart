@@ -7,6 +7,9 @@ class CreateLog extends StatefulWidget {
   _CreateLog createState() => new _CreateLog();
 }
 
+final TextEditingController _nameField = new TextEditingController();
+
+
 class _CreateLog extends State<CreateLog> {
   String dayLevel = 'O';
   String logName = '';
@@ -19,6 +22,10 @@ class _CreateLog extends State<CreateLog> {
       'title': this.logName,
       'date': this.logTime,
     });
+    this.dayLevel = '';
+    this.logName = '';
+    this.logTime = '';
+    _nameField.clear();
   }
   updateDayLevel(value) { this.setState(() => dayLevel = value); }
   updateLogName(value) {  this.setState(() => logName = value);  }
@@ -46,6 +53,7 @@ class _CreateLog extends State<CreateLog> {
                 Align(
                     alignment: Alignment.centerLeft,
                     child: TextField(
+                      controller: _nameField,
                       style: Theme.of(context).textTheme.body1,
                       onChanged: (value) {
                         updateLogName(value);

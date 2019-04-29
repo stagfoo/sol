@@ -2,43 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:sol6/wigets/LogEntry.dart';
 import 'package:sol6/wigets/CreateLog.dart';
 import 'package:sol6/utils/database.dart';
-
+import 'package:sembast/sembast.dart';
+import 'package:sembast/sembast_io.dart';
 
 class LogEntry {
   final String title;
-  final int rating;
+  final String rating;
   bool isPlaying;
   final String date;
   LogEntry(this.title, this.rating, this.isPlaying, this.date);
 }
 class LogListView extends StatefulWidget {
+  final Future<List<Record>> logs;
+  final db = LogDatabase();
+  LogListView({Key key, this.logs}) : super(key: key);
   @override
   _LogListView createState() => new _LogListView();
 }
 
 
-
 class _LogListView extends State<LogListView> {
-  final db = LogDatabase();
-  var logs;
-  var logsLength;
+  List<Record> _logs = [];
 
-  getRecords(db) async {
-    db.addRecord({
-      'rating': 'U',
-      'title': 'Example Log',
-      'date': '1991-10-19',
+  void loadRecords() async {
+    final temp = await widget.db.getRecords(10);
+    this.setState((){
+      _logs = temp;
     });
-    this.setState(
-      logs = await db.getRecords(10)
-    );
   }
 
   @override
   void initState() {
     super.initState();
-    this.getRecords(db);
-    print(this.logs);
+    this.loadRecords();
   }
   Widget build(BuildContext context) {
     // Material is a conceptual piece of paper on which the UI appears.
@@ -65,21 +61,20 @@ class _LogListView extends State<LogListView> {
               child: Container(
               padding:EdgeInsets.all(20),
               child:ListView.builder(
+                itemCount: 10,
                 shrinkWrap : true,
                 scrollDirection: Axis.vertical,
                 itemBuilder: (context, index) {
+                  if(index < _logs.length) {
                   return GestureDetector(
-                    onTap: () {
-                      print(logs[index]);
-                      print(logs);
-                    },
                     child: LogEntryItem(
-                      title: 'Hello',
-                      rating: 'U',
-                      date: '1991',
+                      title: _logs[index]['title'],
+                      rating: _logs[index]['rating'],
+                      date: _logs[index]['date'],
                     )
                   );
-                })
+                }}
+              )
             )
             )
           ],
