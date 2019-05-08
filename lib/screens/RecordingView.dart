@@ -11,11 +11,17 @@ import 'package:sol6/utils/icons.dart';
 
 
 class RecordingView extends StatefulWidget {
+  final record;
   @override
-  _RecordingView createState() => new _RecordingView();
+  const RecordingView(Map map, {Key key, this.record}) : super(key: key);
+  _RecordingView createState() => new _RecordingView(record);
 }
 
 class _RecordingView extends State<RecordingView> {
+  final record;
+  _RecordingView(this.record);
+
+
   bool _isRecording = false;
   bool _isPlaying = false;
   String filePath;
@@ -41,14 +47,20 @@ class _RecordingView extends State<RecordingView> {
     flutterSound.setDbPeakLevelUpdate(0.8);
     flutterSound.setDbLevelEnabled(true);
     initializeDateFormatting();
+    print('---RecordingView---');
+    print(widget.record);
+    print(this.record);
+    print(context);
+    print('---RecordingView---');
   }
 
-  void startRecorder() async{
+  void startRecorder() async {
     try {
       String fileName = new DateTime.now().toLocal().toString().split(' ')[0];
       //  new File('sdcard/sol/$fileName.mp4');
       String mediaPath = await this._storage.localPath;
       filePath = '$mediaPath/$fileName.mp4';
+      print(record);
       String path = await flutterSound.startRecorder(filePath);
       print('startRecorder: $path');
       _recorderSubscription = flutterSound.onRecorderStateChanged.listen((e) {

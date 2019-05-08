@@ -12,11 +12,23 @@ import 'screens/LogListView.dart';
 import 'screens/RecordingView.dart';
 import 'screens/SplashView.dart';
 
-var state = {
-  'currentName': '',
-  'file': '',
-  'list': {}
-};
+
+class TodoList extends StatefulWidget {
+  @override
+  createState() => new TodoListState();
+}
+
+class TodoListState extends State<TodoList> {
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text('Todo List')
+      )
+    );
+  }
+}
+
 
 void main() {
   runApp(MaterialApp(
@@ -37,7 +49,7 @@ void main() {
     home: SplashView(),
     routes: <String, WidgetBuilder>{
       '/list': (BuildContext context) => LogListView(),
-      '/single': (BuildContext context) => RecordingView()
+      '/single': (BuildContext context) => RecordingView({})
     },
   ));
 }
