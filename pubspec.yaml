@@ -16,6 +16,7 @@ version: 1.0.0+1
 environment:
   sdk: ">=2.1.0 <3.0.0"
 dependencies:
+  flhooks: ^1.1.0
   assets_audio_player: ^1.0.0
   path_provider: ^0.5.0+1
   flutter_svg: ^0.12.4

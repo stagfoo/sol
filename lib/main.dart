@@ -11,21 +11,14 @@ import 'package:flutter/material.dart';
 import 'screens/LogListView.dart';
 import 'screens/RecordingView.dart';
 import 'screens/SplashView.dart';
+import 'data/state.dart';
 
-
-class TodoList extends StatefulWidget {
-  @override
-  createState() => new TodoListState();
-}
-
-class TodoListState extends State<TodoList> {
+class LogListProvider extends StatelessWidget {
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('Todo List')
-      )
-    );
+    return  InheritedState( child: LogListProvider());
+     // <-- make sure your InheritedWidget wraps the widgets that use its data
   }
 }
 
@@ -48,7 +41,7 @@ void main() {
     ),
     home: SplashView(),
     routes: <String, WidgetBuilder>{
-      '/list': (BuildContext context) => LogListView(),
+      '/list': (BuildContext context) => LogListProvider(),
       '/single': (BuildContext context) => RecordingView({})
     },
   ));

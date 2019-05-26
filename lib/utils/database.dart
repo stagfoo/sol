@@ -32,6 +32,13 @@ class LogDatabase {
     final _db = await db;
     return _db.getStore(storeName);
   }
+  Future<Record> getRecord(name) async {
+    final _store = await getStore();
+    final finder = Finder(
+    filter: Filter.greaterThan('name', name),
+    sortOrders: [SortOrder('name')]);
+    return _store.findRecord(finder);
+  }
   Future<Record> addRecord(record) async {
     final _rec = Record(await getStore(), record);
     Database _db = await db;
