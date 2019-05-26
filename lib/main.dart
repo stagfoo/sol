@@ -17,10 +17,18 @@ class LogListProvider extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return  InheritedState( child: LogListProvider());
+    return  InheritedState( child: LogListView());
      // <-- make sure your InheritedWidget wraps the widgets that use its data
   }
 }
+// class RecordingViewProvider extends StatelessWidget {
+//   // This widget is the root of your application.
+//   @override
+//   Widget build(BuildContext context) {
+//     return  InheritedState( child: RecordingView(''));
+//      // <-- make sure your InheritedWidget wraps the widgets that use its data
+//   }
+// }
 
 
 void main() {
@@ -42,7 +50,6 @@ void main() {
     home: SplashView(),
     routes: <String, WidgetBuilder>{
       '/list': (BuildContext context) => LogListProvider(),
-      '/single': (BuildContext context) => RecordingView({})
     },
   ));
 }

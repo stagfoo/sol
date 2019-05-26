@@ -8,20 +8,21 @@ class InheritedState extends InheritedWidget {
     'title': '',
     'date': '',
   };  // Data structure is a map because InheritedWidgets are immutable
-  final _logList = LogDatabase().getRecords(10);
   final Widget child;
-
+  final db = LogDatabase();
   InheritedState({ this.child }) : super(child: child);
 
   setNewRecordData(key, val) {
      _newRecording[key] = val;
   }
 
-  get singleRecordData(key) async {
-    return LogDatabase().getRecord(key);
+  singleRecordData(key) async {
+    return db.getRecord(key);
   }
 
-  get logs => _logList;
+
+  get logs => db.getRecords(10);
+  get length => 10;
 
   // to tell child context has changed, I think
   @override
